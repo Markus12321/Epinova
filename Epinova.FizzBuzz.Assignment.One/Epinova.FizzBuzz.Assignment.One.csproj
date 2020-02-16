@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Epinova.FizzBuzz.Assignment.Common\Epinova.FizzBuzz.Assignment.Common.csproj" />
+  </ItemGroup>
+
+</Project>
