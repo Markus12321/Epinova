@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Epinova.FizzBuzz.Assignment.Common.Interface;
 using Epinova.FizzBuzz.Assignment.Two.Service.CustomException;
@@ -33,7 +34,7 @@ namespace Epinova.FizzBuzz.Assignment.Two.Service
             }
         }
 
-        public List<string> ProcessedList { get; private set; }
+        public List<string> ProcessedList { get; private set; } = Enumerable.Empty<string>().ToList();
 
         public int Count
         {
@@ -43,10 +44,7 @@ namespace Epinova.FizzBuzz.Assignment.Two.Service
                 : value;
         }
 
-        public void Print()
-        {
-            ProcessedList.ForEach(x => Console.WriteLine($"{x}"));
-        }
+        public void Print() => ProcessedList.ForEach(Console.WriteLine);
 
         public void Process()
         {
@@ -58,7 +56,7 @@ namespace Epinova.FizzBuzz.Assignment.Two.Service
                 ProcessedList = new List<string>();
                 ProcessedList.AddRange(Ascending
                     ? GetCustomFizzBuzzListAscending()
-                    : GetCustomFizzBuzzListDescending());
+                    : GetCustomFizzBuzzListAscending().Reverse());
             }
             catch (Exception e)
             {
@@ -66,47 +64,18 @@ namespace Epinova.FizzBuzz.Assignment.Two.Service
             }
         }
 
-        private IList<string> GetCustomFizzBuzzListAscending()
+        private IEnumerable<string> GetCustomFizzBuzzListAscending()
         {
-            var data = new List<string>();
-            var entry = new StringBuilder();
-
-
             for (var number = 1; number <= Count; number++)
             {
+                string entry = null;
+
                 foreach (var divisibleFactor in DivisibleFactors)
                     if (number % divisibleFactor.Factor == 0)
-                        entry.Append($"{divisibleFactor.Word}");
+                        entry += divisibleFactor.Word;
 
-                if (entry.Length == 0)
-                    entry.Append(number.ToString());
-
-                data.Add(entry.ToString());
-                entry.Clear();
+                yield return entry ?? number.ToString();
             }
-
-            return data;
-        }
-
-        private IList<string> GetCustomFizzBuzzListDescending()
-        {
-            var data = new List<string>();
-            var entry = new StringBuilder();
-
-            for (var number = Count; number >= 1; number--)
-            {
-                foreach (var divisibleFactor in DivisibleFactors)
-                    if (number % divisibleFactor.Factor == 0)
-                        entry.Append($"{divisibleFactor.Word}");
-
-                if (entry.Length == 0)
-                    entry.Append(number.ToString());
-
-                data.Add(entry.ToString());
-                entry.Clear();
-            }
-
-            return data;
         }
 
         private void SortFactors()

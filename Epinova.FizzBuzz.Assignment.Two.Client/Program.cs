@@ -11,10 +11,11 @@ namespace Epinova.FizzBuzz.Assignment.Two.Client
         {
             var factors = new List<DivisibleFactor>
             {
-                new DivisibleFactor(9, "Jazz"),
-                new DivisibleFactor(4, "Fuzz")
+                new DivisibleFactor(3, "Fizz"),
+                new DivisibleFactor(5, "Buzz")
             };
 
+            Console.ForegroundColor = ConsoleColor.Cyan;
             PrintList(100, factors);
 
             Console.WriteLine();
@@ -24,7 +25,9 @@ namespace Epinova.FizzBuzz.Assignment.Two.Client
                 new DivisibleFactor(9, "Jazz"),
                 new DivisibleFactor(4, "Fuzz")
             };
-            PrintList(100, factors, false);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            PrintList(100, factors, ascending: false);
         }
 
         private static void PrintList(int count, List<DivisibleFactor> divisibleFactors, bool ascending = true)
